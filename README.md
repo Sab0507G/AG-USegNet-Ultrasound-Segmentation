@@ -1,113 +1,285 @@
-# AG-USegNet: Attention-Guided Ultrasound Nerve Segmentation using Hybrid U-Net + SegNet
+# AG-USegNet: Attention-Guided Hybrid Network for Ultrasound Nerve Segmentation
 
-## Introduction
-Ultrasound imaging is widely used in medical diagnostics, but segmenting anatomical structures like nerves remains a challenging task due to low contrast, speckle noise, and anatomical variations. This project implements an **attention-guided hybrid deep learning model combining U-Net and SegNet** for **Brachial Plexus segmentation** from ultrasound images.
+A deep learning framework for **Brachial Plexus nerve segmentation** from ultrasound images using a hybrid **U-Net + SegNet** architecture with **attention-gated skip connections**. The project focuses on improving segmentation accuracy while maintaining computational efficiency for near real-time clinical deployment.
 
-The model integrates **attention mechanisms** to enhance nerve-specific features while suppressing background noise, improving segmentation accuracy and efficiency.
-
-## Importance & Relevance
-Accurate segmentation of the **Brachial Plexus nerve** is crucial for various medical applications:
-
-- **Regional Anesthesia**: Helps doctors accurately locate nerves for safer procedures  
-- **Surgical Planning**: Reduces risk of accidental nerve damage  
-- **Medical Training**: Enables high-quality labeled data for training and automation  
-
-## Challenges in Brachial Plexus Segmentation
-- The **Brachial Plexus is small** and blends with surrounding tissues  
-- **Ultrasound images are noisy** with low contrast  
-- **Traditional CNNs struggle** with fine details and global context  
-- Poor balance between **localization and feature extraction**  
-
-## Why Hybrid U-Net + SegNet?
-This project combines the strengths of both architectures:
-
-- **U-Net**: Captures fine details using skip connections  
-- **SegNet**: Ensures efficient and precise pixel-wise segmentation  
-- **Hybrid Approach**: Improves boundary detection and localization  
-- **Attention Integration**: Enhances relevant features while suppressing noise  
-
-## Model Architecture
-The **AG-USegNet** consists of:
-
-1. **Encoder (U-Net)**  
-   - Extracts multi-scale features  
-   - Preserves spatial information using skip connections  
-
-2. **Bottleneck**  
-   - Learns deep semantic representations  
-
-3. **Decoder (SegNet-inspired)**  
-   - Uses pooling indices for efficient upsampling  
-   - Produces sharp segmentation masks  
-
-4. **Attention Gates**  
-   - Focus on nerve-relevant regions  
-   - Suppress irrelevant background features  
-
-## Attention Mechanism
-- Integrated **attention-gated skip connections**  
-- Highlights **important nerve regions**  
-- Reduces background noise interference  
-- Improves **boundary detection and localization accuracy**  
-
-## Dataset
-- Source: **Kaggle Brachial Plexus Ultrasound Dataset**
-
-### Dataset Structure:
-- **Images**: Ultrasound scans  
-- **Masks**: Binary segmentation masks  
-- **CSV File**: Pixel-level annotations  
-
-## Methodology
-
-### Data Preprocessing:
-- Normalization  
-- CLAHE (contrast enhancement)  
-- Data augmentation (rotation, flipping, scaling)  
-
-### Model Training:
-- Loss Function: **Binary Cross-Entropy + Dice Loss**  
-- Optimizer: **Adam**  
-- Early stopping to prevent overfitting  
-- Attention-guided feature refinement  
-
-### Evaluation Metrics:
-- Dice Coefficient  
-- Intersection over Union (IoU)  
-- Precision & Recall  
-- F1-Score  
-- Boundary Accuracy  
-
-## Results
-- **Dice Coefficient:** 0.8450  
-- **F1-Score:** 0.8856  
-- **IoU:** 0.7947  
-
-Improved segmentation accuracy compared to baseline models  
-Better boundary detection and localization  
-
-## Ablation Study
-- Compared model performance:
-  
-![Ablation Results](<img width="374" height="106" alt="Screenshot 2026-03-18 at 3 06 33 PM" src="https://github.com/user-attachments/assets/4eed2f98-b7a3-4899-b13c-34d1a95a7e66" />
-)
-
-Result:  
-Attention significantly improves segmentation quality and precision  
-
-![Results](<img width="189" height="72" alt="Screenshot 2026-03-18 at 3 11 33 PM" src="https://github.com/user-attachments/assets/58d913a5-c417-4afa-977a-abcb6343075c" />
-)
+---
 
 ## Key Highlights
-- Attention-guided hybrid architecture (U-Net + SegNet)  
-- Improved performance in noisy ultrasound images  
-- Lightweight and efficient for near real-time inference  
 
-## Future Work
-- Real-time deployment optimization  
-- Multi-class medical image segmentation  
-- Advanced post-processing (CRFs)  
+- Hybrid **U-Net + SegNet** architecture
+- Attention-gated skip connections
+- Lightweight and computationally efficient
+- TensorFlow implementation
+- ONNX export with C++ inference pipeline
+- Evaluated against state-of-the-art segmentation models
 
-## Conclusion
-This project demonstrates the effectiveness of an **attention-guided hybrid U-Net + SegNet architecture** for brachial plexus nerve segmentation. The model improves segmentation accuracy and can assist medical professionals in diagnosis and treatment planning.
+---
 
+## Project Evolution
+
+This work evolved from our initial lightweight segmentation model **LAG-Net**.
+
+### LAG-Net
+- Lightweight residual encoder
+- Channel-spatial attention
+- Computationally efficient segmentation
+
+### AG-USegNet (Final Model)
+- Hybrid U-Net + SegNet architecture
+- Attention-guided skip connections
+- Improved feature fusion
+- ONNX deployment
+- C++ inference support
+- Higher segmentation performance
+
+---
+
+# Problem Statement
+
+Ultrasound nerve segmentation is challenging because:
+
+- Low image contrast
+- Speckle noise
+- Small nerve structures
+- Anatomical variations
+- Difficult boundary localization
+
+AG-USegNet addresses these challenges by combining the localization capability of **U-Net**, the efficient decoder of **SegNet**, and an attention mechanism that focuses on nerve-specific regions.
+
+---
+
+# Clinical Importance
+
+Accurate brachial plexus segmentation assists in:
+
+- Regional anesthesia
+- Surgical planning
+- Computer-assisted diagnosis
+- Medical education
+- Image-guided interventions
+
+---
+
+# Model Architecture
+
+AG-USegNet consists of:
+
+## Encoder (U-Net)
+
+- Multi-scale feature extraction
+- Skip connections
+- Rich spatial representation
+
+## Bottleneck
+
+- Deep semantic feature learning
+
+## Decoder (SegNet)
+
+- Pooling-index based upsampling
+- Efficient feature reconstruction
+- Sharp segmentation masks
+
+## Attention Gates
+
+- Suppress background noise
+- Highlight nerve structures
+- Improve boundary localization
+
+---
+
+# Dataset
+
+**Dataset**
+
+Kaggle Ultrasound Nerve Segmentation Dataset
+
+- 5,635 ultrasound images
+- 47 subjects
+- Ground-truth segmentation masks
+
+---
+
+# Methodology
+
+## Data Preprocessing
+
+- Image normalization
+- CLAHE contrast enhancement
+- Data augmentation
+  - Rotation
+  - Horizontal flipping
+  - Scaling
+
+## Training
+
+- TensorFlow
+- Adam Optimizer
+- Binary Cross Entropy + Dice Loss
+- Early Stopping
+
+---
+
+# Evaluation Metrics
+
+- Dice Coefficient
+- F1-Score
+- IoU
+- Precision
+- Recall
+- Boundary Accuracy
+
+---
+
+# Performance
+
+| Model | Dice | IoU |
+|--------|------:|------:|
+| LAG-Net | 80.36% | 67.17% |
+| **AG-USegNet** | **84.50%** | **79.47%** |
+
+### Final Performance
+
+| Metric | Score |
+|---------|------:|
+| Dice Coefficient | **0.8450** |
+| F1-Score | **0.8856** |
+| IoU | **0.7947** |
+
+AG-USegNet achieved superior segmentation performance while maintaining computational efficiency suitable for near real-time inference.
+
+---
+
+# Comparison with Existing Models
+
+The proposed model was evaluated against:
+
+- Attention U-Net
+- DeepLabV3+
+- TransUNet
+- SwinSeg
+
+AG-USegNet demonstrated improved segmentation quality and better boundary localization.
+
+---
+
+# Ablation Study
+
+The contribution of the attention module was evaluated through an ablation study.
+
+**Without Attention**
+- Lower Dice Score
+- Poor boundary localization
+
+**With Attention**
+- Higher segmentation accuracy
+- Better nerve localization
+- Reduced background noise
+
+<p align="center">
+<img src="ablation study.png" width="500">
+</p>
+
+---
+
+# Sample Results
+
+<p align="center">
+<img src="results.png" width="650">
+</p>
+
+Example predictions showing improved nerve boundary localization.
+
+---
+
+# Deployment
+
+The trained TensorFlow model was exported to **ONNX** and integrated with a **C++ inference pipeline** for near real-time deployment.
+
+Pipeline:
+
+TensorFlow → ONNX → C++ Inference
+
+---
+
+# Repository Structure
+
+```
+AG-USegNet
+│
+├── app/
+├── hybrid.py
+├── unet.py
+├── Segnet.py
+├── main.cpp
+├── results.png
+├── overall.png
+├── ablation study.png
+├── README.md
+```
+
+---
+
+# Installation
+
+```bash
+git clone https://github.com/Sab0507G/AG-USegNet-Ultrasound-Segmentation.git
+
+cd AG-USegNet-Ultrasound-Segmentation
+
+pip install -r requirements.txt
+```
+
+---
+
+# Running the Project
+
+Training
+
+```bash
+python train.py
+```
+
+Inference
+
+```bash
+python predict.py
+```
+
+---
+
+# Future Work
+
+- Real-time deployment optimization
+- Multi-class medical image segmentation
+- Transformer-based attention modules
+- Edge-device optimization
+- Clinical validation
+
+---
+
+# Author
+
+**Sabhyata Sinha**
+
+B.Tech Computer Science (AI & ML)
+
+Manipal University Jaipur
+
+---
+
+## Citation
+
+```bibtex
+@article{agussegnet2026,
+  title={AG-USegNet: Attention-Guided Hybrid Network for Ultrasound Nerve Segmentation},
+  author={Sabhyata Sinha},
+  year={2026}
+}
+```
+
+---
+
+## License
+
+This repository is intended for research and educational purposes.
